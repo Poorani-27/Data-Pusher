@@ -1,0 +1,49 @@
+{% extends "admin/base.html" %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="\static\css\admin_styles.css">
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    {% block breadcrumbs %}
+    {% if title %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+        &rsaquo; {{ title }}
+    </div>
+    {% endif %}
+    {% endblock %}
+
+    <div class="module">
+        {% block messages %}
+        {% if messages %}
+        <ul class="messagelist">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+        </ul>
+        {% endif %}
+        {% endblock messages %}
+
+        {% block content_title %}
+        <h2>{{ title }}</h2>
+        {% endblock %}
+
+        {% block content %}
+        {% block object-tools %}
+        {% if change %}{% if not is_popup %}
+        <ul class="object-tools">
+            {% block object-tools-items %}
+            {{ block.super }}
+            {% endblock %}
+        </ul>
+        {% endif %}{% endif %}
+        {% endblock %}
+
+        {{ block.super }}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
